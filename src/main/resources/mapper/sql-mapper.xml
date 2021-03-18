@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="address.mapper.AddressMapper">
+	<!-- \ubaa9\ub85d\ud654\uba74 -->
+	<select id="selectAddressList" resultType="address.dto.AddressDto">
+		<![CDATA[
+			SELECT 
+				num, 
+				name, 
+				phone, 
+				tel, 
+				email, 
+				addr 
+			FROM 
+				addressbook
+			ORDER BY num DESC
+		]]>
+	</select>
+	
+	<!-- \uc0c1\uc138\ud654\uba74 -->
+	<select id="selectAddressDetail" parameterType="int" resultType="address.dto.AddressDto">
+		<![CDATA[
+			SELECT 
+				num, 
+				name, 
+				phone, 
+				tel, 
+				email, 
+				addr 
+			FROM 
+				addressbook
+			WHERE
+				num = #{num}
+		]]>
+	</select>
+	
+	<!-- \uc0bd\uc785 -->
+	<insert id="insertAddress" parameterType="address.dto.AddressDto" useGeneratedKeys="true" keyProperty="num">
+		<![CDATA[
+			INSERT INTO addressbook
+				(name, phone, tel, email, addr)
+			VALUES
+				(#{name}, #{phone}, #{tel}, #{email}, #{addr})
+		]]>
+	</insert>
+	
+	<!-- \uc218\uc815 -->
+	<update id="updateAddress" parameterType="address.dto.AddressDto">
+		<![CDATA[
+			UPDATE
+				addressbook
+			SET
+				name = #{name}, phone = #{phone}, tel= #{tel}, email = #{email}, addr = #{addr} 
+			WHERE
+				num = #{num}
+		]]>
+	</update>
+	
+	<!-- \uc0ad\uc81c -->
+	<delete id="deleteAddress" parameterType="int">
+		<![CDATA[ 
+			DELETE
+			FROM
+				addressbook
+			WHERE
+				num = #{num}
+		]]>
+	</delete>
+	
+</mapper>

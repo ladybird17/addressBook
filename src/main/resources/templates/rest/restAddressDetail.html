@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thypeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>연락처 상세보기</title>
+<link rel="stylesheet" href="/css/bootstrap.css" th:href="@{/css/bootstrap.css}">
+<script src="/js/jquery-3.5.1.js" th:src="@{/js/jquery-3.5.1.js}"></script>
+<script src="/js/popper.min.js" th:src="@{/js/popper.min.js}"></script>
+<script src="/js/bootstrap.js" th:src="@{/js/bootstrap.js}"></script>
+
+<script>
+	$(document).ready(function(){
+		
+		var num = $("#num").val();
+		
+		$("#btnList").on("click",function(){
+			location.href="/address/";
+		})
+		
+		$("#btnEdit").on("click",function(){
+			//id가 method인 html(input)태그의 value에 PUT을 입력함
+			//스프링의 rest api 규칙에 의해서 RequestMethod.PUT으로 변경
+			$("#method").val("PUT");
+			var frm = $("#frm")[0];
+			frm.action = "/address/"+num;
+			frm.submit();
+		})
+		
+		$("#btnDel").on("click",function(){
+			$("#method").val("DELETE");
+			var frm = $("#frm")[0];
+			frm.action = "/address/"+num;
+			frm.submit();
+		})
+	});
+</script>
+</head>
+<body>
+<div class="container">
+		<div class="jumbotron">
+			<h2>연락처 상세보기</h2>
+		</div>
+		<form id="frm" method="POST">
+			<table class="table">
+				<tbody>
+					<tr>
+						<td>글 번호</td>
+						<td th:text="${address.num}"></td>
+					</tr>
+					<tr>
+						<td>이름</td>
+						<td colspan="1">
+							<input type="text" id="name" name="name" th:value="${address.name}" class="form-control">
+						</td>
+					</tr>
+					<tr>
+						<td>휴대폰</td>
+						<td colspan="1">
+							<input type="text" id="phone" name="phone" th:value="${address.phone}" class="form-control">
+						</td>
+					</tr>
+					<tr>
+						<td>전화번호</td>
+						<td colspan="1">
+							<input type="text" id="tel" name="tel" th:value="${address.tel}" class="form-control">
+						</td>
+					</tr>
+					<tr>
+						<td>이메일</td>
+						<td colspan="1">
+							<input type="text" id="email" name="email" th:value="${address.email}" class="form-control">
+						</td>
+					</tr>
+					<tr>
+						<td>주소</td>
+						<td colspan="1">
+							<input type="text" id="addr" name="addr" th:value="${address.addr}" class="form-control">
+						</td>
+					</tr>
+				</tbody>
+			</table>
+			<!-- 화면에는 보이지 않고 서버에는 전송되는 데이터 -->
+			<input type="hidden" id="num" name="num" th:value="${address.num}">
+			<input type="hidden" id="method" name="_method">
+			<div class="d-flex flex-rows justify-content-end">
+				<button type="button" class="btn btn-light" id="btnList">목록으로</button>
+				<button type="button" class="btn btn-light ml-2" id="btnEdit">수정하기</button>
+				<button type="button" class="btn btn-light ml-2" id="btnDel">삭제하기</button>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

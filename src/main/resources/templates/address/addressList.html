@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="ko" xmln:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>연락처 목록</title>
+<link rel="stylesheet" th:href="@{/css/bootstrap.css}"></link>
+<script th:src="@{/js/jquery-3.5.1.js}"></script>
+<script th:src="@{/js/popper.min.js}"></script>
+<script th:src="@{/js/bootstrap.js}"></script>
+</head>
+<body>
+	<div class="container">
+		<div class="jumbotron bg-success text-white">
+			<h2>연락처 목록</h2>
+		</div>
+		<table class="table table-hover">
+			<colgroup>
+				<col width="10%"/>
+				<col width="15%"/>
+				<col width="15%"/>
+				<col width="15%"/>
+				<col width="22.5%"/>
+				<col width="22.5%"/>
+			</colgroup>
+			<thead class="table-dark">
+				<tr>
+					<th>글번호</th>
+					<th>이름</th>
+					<th>휴대폰</th>
+					<th>전화번호</th>
+					<th>이메일</th>
+					<th>주소</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${#lists.size(data)}>0" th:each="list : ${data}" th:object="${list}">
+					<td th:text="*{num}"></td>
+					<td><a href="/address/openAddressDetail.do?num="th:attrappend="href=${list.num}" th:text="*{name}"></a></td>
+					<td th:text="*{phone}"></td>
+					<td th:text="*{tel}"></td>
+					<td th:text="*{email}"></td>
+					<td th:text="*{addr}"></td>
+				</tr>
+				<tr th:unless="${#lists.size(data)}>0">
+					<td colspan="4">조회된 결과가 없습니다.</td>
+				</tr>
+			</tbody>
+		</table>
+		<div class="d-flex justify-content-end">
+			<a href="/address/openAddressWrite.do" class="btn btn-light">글쓰기</a>
+		</div>
+		
+	</div>
+</body>
+</html>
